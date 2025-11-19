@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MotoApp Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-animation 15s ease infinite;
+        }
+        .holographic-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            border: 1px solid transparent;
+            background: linear-gradient(120deg, rgba(255, 0, 0, 0.4), rgba(255, 100, 0, 0.4), rgba(255, 255, 255, 0.4)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF4500", // OrangeRed accent
+                        "background-light": "#F7FAFC",
+                        "background-dark": "#0A0A0A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1A202C",
+                        "text-light": "#1A202C",
+                        "text-dark": "#F7FAFC",
+                        "text-secondary-light": "#4A5568",
+                        "text-secondary-dark": "#A0AEC0",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
+                        'soft-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { min-height: max(884px, 100dvh); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="absolute inset-0 z-0 animate-gradient bg-gradient-to-br from-[#1c1c1c] via-background-dark to-[#3c1e1e] dark:from-[#000000] dark:via-[#1a0f0f] dark:to-[#3c1e1e]"></div>
+<div class="relative z-10 flex-grow">
+<header class="flex items-center p-4 pb-2 justify-between sticky top-0 z-20 bg-transparent">
+<div class="flex size-12 shrink-0 items-center justify-start text-text-dark">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</div>
+<h1 class="text-text-dark text-xl font-bold leading-tight tracking-[-0.015em] text-center flex-1">MotoApp</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-transparent text-text-dark gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<h2 class="text-text-dark tracking-tighter text-[32px] font-bold leading-tight px-4 text-left pb-1 pt-4">Encuentra tu Futuro</h2>
+<div class="px-4 py-3">
+<label class="flex flex-col min-w-40 h-14 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-white/5 backdrop-blur-lg border border-white/10 shadow-soft-lg">
+<div class="text-white/70 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-text-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-white/70 px-4 pl-2 text-base font-normal leading-normal" placeholder="Buscar modelo o marca..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex gap-3 px-4 py-3 overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-5 pr-5 cursor-pointer shadow-lg shadow-primary/30">
+<p class="text-white text-sm font-semibold leading-normal">Eléctricas</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white/5 backdrop-blur-lg pl-5 pr-5 cursor-pointer border border-white/10">
+<p class="text-text-dark text-sm font-medium leading-normal">Gasolina</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white/5 backdrop-blur-lg pl-5 pr-5 cursor-pointer border border-white/10">
+<p class="text-text-dark text-sm font-medium leading-normal">Nuevas</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white/5 backdrop-blur-lg pl-5 pr-5 cursor-pointer border border-white/10">
+<p class="text-text-dark text-sm font-medium leading-normal">Usadas</p>
+</div>
+</div>
+<div class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden py-4">
+<div class="flex items-stretch px-4 gap-4">
+<div class="relative flex h-full flex-1 flex-col justify-end overflow-hidden rounded-xl min-w-72 p-3 shadow-soft-lg aspect-video holographic-glow">
+<img alt="Close-up shot of a sleek electric scrambler motorcycle parked on a city street at dusk." class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR5Wkx4NRZsXufA3Tnrked_p8TK1DS23-hdd_EWkipZHq1D8kVdGcEgYnj0o6FYqVsKBvQiy0tzX6u5WLtlwc4f-yiEwWpt0YJTachC_5SlO64Xwe3DN1Cf0uQeKV0t6xeWgHrjh60XOal3pjTnKDT2dU82h4bov7wGPy8-7bSfKQe6_l5OYOlA34wAXgtI9oRl2o2PCVT-0OS9xUPkdpuPYSR_xZOJdE8GNyrQ3CQYIhqP-vBPYOVw0218c3OO4qWg0QVf3GAmE60"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+<div class="relative z-10">
+<p class="text-text-dark text-base font-semibold leading-normal">Nueva Scrambler Eléctrica</p>
+<p class="text-white/80 text-sm font-normal leading-normal">Descubre el futuro de la movilidad</p>
+</div>
+</div>
+<div class="relative flex h-full flex-1 flex-col justify-end overflow-hidden rounded-xl min-w-72 p-3 shadow-soft-lg aspect-video holographic-glow">
+<img alt="A powerful touring motorcycle on a winding mountain road with a scenic view." class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvktmdkqkbhxdigqDw3HRGbN-wAsZmmoMbBQZuQZHryxoXVppITBSCpCMpaOnJOJ_XeTSVqEPcepcrIQIeX_gQd2PSyqOQGgsfUfOt2yhbzXcDnoy2efyJzv1aalgWY5FDCZBxJpAe-tgbi9JuA-zDrr0R6ivP8mFKPILV-W677Sic2cq-N1emV8BIGP27dXjV1EG26qmfE5HhewSizhLGv5rsPsDKuFUYmMA4vQQnut_35hQsDn-wRhsuOeY0yK1ft0pA18IcOm6Y"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+<div class="relative z-10">
+<p class="text-text-dark text-base font-semibold leading-normal">Potencia y Libertad sin Límites</p>
+<p class="text-white/80 text-sm font-normal leading-normal">Domina cada curva del camino</p>
+</div>
+</div>
+<div class="relative flex h-full flex-1 flex-col justify-end overflow-hidden rounded-xl min-w-72 p-3 shadow-soft-lg aspect-video holographic-glow">
+<img alt="A motorcycle helmet and gloves resting on the seat of a bike." class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD06yMUPkCKu3pWrbEfIUgS3QvkJlL7pQ5iWnHqSqZEfIife0nUo6evqPTDvDR6UhtlsTw9VITGzevmMnjcxvNvbrj8Exzm98x60uih0GWofe_dZMVQ4wMY4vncvxjWgGztK8-xixeP2hD8-PjVh4B8NFUkUFp6q5zkwAjE0_5Bfd0-s9WWZg_secn3RJyoeuo7YYOhkLbBdDeYo72OByZAMEOFGuzZH-lB8NpYap2S0V9lu8Ix1I-3IuAxfoTzIX9oVnB5REfNifvO"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+<div class="relative z-10">
+<p class="text-text-dark text-base font-semibold leading-normal">20% de descuento en seguros</p>
+<p class="text-white/80 text-sm font-normal leading-normal">Conduce con protección total</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 pt-2">
+<h3 class="text-text-dark text-xl font-bold leading-tight tracking-tight mb-4">Recomendadas para ti</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2 bg-white/5 backdrop-blur-lg p-2.5 rounded-xl shadow-soft-lg border border-white/10">
+<div class="relative w-full rounded-lg holographic-glow">
+<img class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Sleek, futuristic electric motorcycle with blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMlZNJmIaZ_v5nxuzoEuX1qMhpxOfq4S5KunxZK1aS6pUEinqUiRTaKmavQ0f8-UcHS3Cz8exQzd0ZWDb9Ao1ZfzEByurnNeKK5EG6tnaxSjS9Q66OgImIiqfO7Cw2jXhNupbL4w5PAyvu64i-bObvW7NqHjadhmaeKtb9mnK1rDxiTTTh78sto4iwhjkXyn_ZQTrsZ1Kyi0qXLOl1HA7bLbGkHRNRzs85A761AnO58NuHUUAIxuxWBZQGbOT8qKiSy0vSeSkqsAEn" style="filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.4));"/>
+<button class="absolute top-2 right-2 flex items-center justify-center size-8 rounded-full bg-black/30 backdrop-blur-sm text-white">
+<span class="material-symbols-outlined text-xl">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-col px-1">
+<p class="text-text-dark text-base font-semibold leading-normal truncate">Volcon Runt</p>
+<p class="text-primary text-sm font-bold leading-normal">$2,999</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 bg-white/5 backdrop-blur-lg p-2.5 rounded-xl shadow-soft-lg border border-white/10">
+<div class="relative w-full rounded-lg holographic-glow">
+<img class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Classic cafe racer motorcycle in a matte black finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAv1QvP-akQNMpDrIRG55kPTQV8UlSE4CxhPRHBGyQSFsIcB0y0r5hgRQokUXFbbAxcWY0CN76RsS54SsD_0zlR5KlAv-dvxqtQ-NvQ5GzwZZg2_YNfMGzryZW3MWUmBWCTTL_d02dFucVpALN6gr5E-H9PMPvvxb6hWIapWtnyr0mzLTBItaVMpRXZ3rPEkHSmdu3125Rw9YTHiELYb8TXgjgnSXlR_J7EBCmuZB7HSvjsvnHseTM4dyUMzIF-y4CELWaq8i3NZLW" style="filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));"/>
+<button class="absolute top-2 right-2 flex items-center justify-center size-8 rounded-full bg-black/30 backdrop-blur-sm text-white">
+<span class="material-symbols-outlined text-xl text-red-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="flex flex-col px-1">
+<p class="text-text-dark text-base font-semibold leading-normal truncate">Triumph Thruxton</p>
+<p class="text-white/80 text-sm font-bold leading-normal">$13,500</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 bg-white/5 backdrop-blur-lg p-2.5 rounded-xl shadow-soft-lg border border-white/10">
+<div class="relative w-full rounded-lg holographic-glow">
+<img class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="A modern scrambler motorcycle ready for an off-road adventure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyoKNokAHY18R-UzwePIYZoZoLJRmxMufQGTGDNAeaqqRU7ULp1tfjBJC_0P8LFzbw9VgXWqtHvUOyOtO4JvNX9aNyb7dMC79SEYItC7rhgpcsuRvYHEiAvG0csJ-sEoDZfoli_gmX-bQjluCN2mWxqR0nFOxkFCrONNEILUgU_ol7cyL-uqQ_ldudJNQ1ySkK-aT3Kazd7O4DemXZRVuy8nb-AIZhtJxWJF0vfu_tnQ5vNo2AV8vljO5RWxyM_1YA1atf1zdMnXf2" style="filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));"/>
+<button class="absolute top-2 right-2 flex items-center justify-center size-8 rounded-full bg-black/30 backdrop-blur-sm text-white">
+<span class="material-symbols-outlined text-xl">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-col px-1">
+<p class="text-text-dark text-base font-semibold leading-normal truncate">Ducati Scrambler</p>
+<p class="text-white/80 text-sm font-bold leading-normal">$11,200</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 bg-white/5 backdrop-blur-lg p-2.5 rounded-xl shadow-soft-lg border border-white/10">
+<div class="relative w-full rounded-lg holographic-glow">
+<img class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="A person riding a stylish red electric scooter through a city." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBah_256bUjO0t7fiYRqcsBae1zCqUaeFFqV57yQTmXNmRrwTvRz4y9FUIQQh-qSicv_lRGKIFv5MLhcxcvnmmBI3beAfglz4PcZ6BWihqWSiYxdBK_oCvQHVU5TjgoMe01igJdC8C8UpmfjqOW3GDWhSGy1YfBWny1U1W1jLJKeHO136RfKzO6JdjBs5CunxjXFO_pNL7pRRcBMjKOgutVomY9CqxIEG6gYzu4O2oaQcuyEC8CELT4RqEbLbPQtwOkKUxil88VWPCJ" style="filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.4));"/>
+<button class="absolute top-2 right-2 flex items-center justify-center size-8 rounded-full bg-black/30 backdrop-blur-sm text-white">
+<span class="material-symbols-outlined text-xl">favorite_border</span>
+</button>
+</div>
+<div class="flex flex-col px-1">
+<p class="text-text-dark text-base font-semibold leading-normal truncate">Niu KQi3 Max</p>
+<p class="text-primary text-sm font-bold leading-normal">$999</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="sticky bottom-0 z-20 bg-black/50 backdrop-blur-xl border-t border-white/10 mt-4">
+<div class="flex justify-around p-2">
+<a class="flex flex-col items-center justify-center gap-1 w-full text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-xs font-bold">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-white/70" href="#">
+<span class="material-symbols-outlined">motorcycle</span>
+<span class="text-xs font-medium">Catálogo</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-white/70" href="#">
+<span class="material-symbols-outlined">build</span>
+<span class="text-xs font-medium">Servicios</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-white/70" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-xs font-medium">Perfil</span>
+</a>
+</div>
+</nav>
+</div>
+
+</body></html>

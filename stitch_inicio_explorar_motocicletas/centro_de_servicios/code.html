@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Centro de Servicios</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#FF4500", // OrangeRed for primary actions
+            "secondary": "#FF6347", // Tomato/Red for secondary actions/accents
+            "background-dark": "#0A0A0A",
+            "glass-border": "rgba(255, 255, 255, 0.1)",
+            "glass-bg": "rgba(38, 38, 38, 0.5)",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1rem", "2xl": "1.5rem", "full": "9999px"},
+          boxShadow: {
+            'glow-orange': '0 0 15px rgba(255, 69, 0, 0.4), 0 0 5px rgba(255, 69, 0, 0.3)',
+            'glow-red': '0 0 15px rgba(255, 0, 0, 0.4), 0 0 5px rgba(255, 0, 0, 0.3)',
+            'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2)',
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 300,
+      'GRAD' 0,
+      'opsz' 24
+    }
+    .bg-dynamic-gradient {
+      background: radial-gradient(circle at 10% 20%, rgba(255, 69, 0, 0.15), transparent 40%),
+                  radial-gradient(circle at 80% 90%, rgba(255, 0, 0, 0.1), transparent 50%),
+                  #0A0A0A;
+    }
+    .icon-3d {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        transform: translateZ(0);}
+    .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-5px);
+    }
+    .orange-border-glow {
+        position: relative;
+        overflow: hidden;
+    }
+    .orange-border-glow::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border-radius: 1rem;border: 1px solid transparent;
+        background: linear-gradient(145deg, rgba(255,107,71,0.5), rgba(255,69,0,0.5)) border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .card-hover:hover .orange-border-glow::before {
+        opacity: 1;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-dynamic-gradient">
+<div class="flex items-center p-4 justify-between sticky top-0 z-20 bg-black/30 backdrop-blur-lg border-b border-glass-border">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-white text-3xl">menu</span>
+</div>
+<h1 class="text-white text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Centro de Servicios</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-3xl">notifications</span>
+</button>
+</div>
+</div>
+<div class="p-4">
+<p class="text-zinc-300 text-sm mb-2">Selecciona tu motocicleta</p>
+<div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+<div class="flex items-stretch gap-4">
+<div class="flex h-full flex-1 flex-col gap-3 rounded-2xl min-w-64 p-3 border-2 border-primary bg-glass-bg backdrop-blur-sm shadow-soft">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApHYMHZc743JOaGtFFgRy6MUC6IDZy4DbobcFYHSdFjSE5JKh6Sv6yH5z_1eWwDP2eISwzeWpW3F0u5A7_VqepM8lEyhprdqRwQ0DOZ628MxXyfUIuLnjMmL3r3aBw8-HBu_p_XOPcG3q0ZvaIg3yOJHqEyvMKHZHU5Ja1T3BdZWLBdJ7I-MUiF0mDLZLDa3V8kfJT8l_BZ-u22IXxodgPh9KfXTBgbQwOF66j7lvy-E3nTpCuNiFqXNjHS4CITGMJGkgtKmHLZqOx");'></div>
+<div>
+<p class="text-white text-base font-semibold leading-normal">Eléctrica Modelo X</p>
+<p class="text-zinc-400 text-sm font-normal leading-normal">Matrícula: 1234-ABC</p>
+</div>
+</div>
+<div class="flex h-full flex-1 flex-col gap-3 rounded-2xl min-w-64 p-3 border border-glass-border bg-glass-bg/50 backdrop-blur-sm">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex flex-col" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBbngiytnKvko5NJqCOsM-THYaT6wJiEQlaxRInUKAvUnu2uvMQz1AJs_WqSjr7KNpH9MAFOjPt5NQChLko_U3oS7pwka5RzEXyV0DqnWc-MgV2StAjEj2kDxIq1B4D-t969VqUdMHUyld17KFteW822sdz76LXnQ_owTFqnRxKmHhYsZPNOY2U-9R7oNlU9SyjziFaDHSG8qTcvw7oA2LbpQP7FGNP2fMabx69wzhvgEzLYG9ZKd-m7BuUyelk236lDFnSS9xGWcfL");'></div>
+<div>
+<p class="text-white text-base font-semibold leading-normal">Gasolina Modelo Z</p>
+<p class="text-zinc-400 text-sm font-normal leading-normal">Matrícula: 5678-DEF</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<main class="flex flex-col gap-6 px-4 py-4">
+<div class="flex flex-col gap-4 rounded-2xl bg-glass-bg backdrop-blur-lg p-5 border border-glass-border shadow-soft card-hover">
+<div class="orange-border-glow"></div>
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-xl bg-black/30 shrink-0 size-14 icon-3d">
+<span class="material-symbols-outlined text-4xl" style="text-shadow: 0 0 10px var(--tw-shadow-color); --tw-shadow-color: #FF4500;">build_circle</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-lg font-semibold leading-normal line-clamp-1">Mantenimiento</p>
+<p class="text-zinc-400 text-sm font-normal leading-normal line-clamp-2">Agenda citas y consulta tu historial de servicio.</p>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<input class="w-full bg-black/20 border border-glass-border rounded-lg h-12 px-4 text-white placeholder-zinc-400 focus:ring-primary focus:border-primary" placeholder="Seleccionar fecha" type="date"/>
+<button class="w-full items-center justify-center rounded-xl h-12 px-6 bg-primary text-white text-base font-bold leading-normal tracking-wide shadow-glow-orange transition-transform hover:scale-105">Agendar Cita</button>
+</div>
+</div>
+<div class="flex flex-col gap-4 rounded-2xl bg-glass-bg backdrop-blur-lg p-5 border border-glass-border shadow-soft card-hover">
+<div class="orange-border-glow"></div>
+<div class="flex items-center gap-4">
+<div class="text-secondary flex items-center justify-center rounded-xl bg-black/30 shrink-0 size-14 icon-3d">
+<span class="material-symbols-outlined text-4xl" style="text-shadow: 0 0 10px var(--tw-shadow-color); --tw-shadow-color: #FF6347;">shield</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-lg font-semibold leading-normal line-clamp-1">Seguros</p>
+<p class="text-zinc-400 text-sm font-normal leading-normal line-clamp-2">Cotiza, contrata y gestiona tu póliza actual.</p>
+</div>
+</div>
+<button class="w-full items-center justify-center rounded-xl h-12 px-6 bg-secondary text-white text-base font-bold leading-normal tracking-wide shadow-glow-orange transition-transform hover:scale-105">Cotizar Ahora</button>
+</div>
+<div class="flex flex-col gap-4 rounded-2xl bg-glass-bg backdrop-blur-lg p-5 border border-glass-border shadow-soft card-hover">
+<div class="orange-border-glow"></div>
+<div class="flex items-center gap-4">
+<div class="text-red-500 flex items-center justify-center rounded-xl bg-black/30 shrink-0 size-14 icon-3d">
+<span class="material-symbols-outlined text-4xl" style="text-shadow: 0 0 10px var(--tw-shadow-color); --tw-shadow-color: #EF4444;">sos</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-white text-lg font-semibold leading-normal line-clamp-1">Asistencia en Carretera</p>
+<p class="text-zinc-400 text-sm font-normal leading-normal line-clamp-2">Servicio 24/7 para cualquier emergencia.</p>
+</div>
+</div>
+<button class="w-full flex items-center justify-center rounded-xl h-14 px-6 bg-red-600 text-white text-lg font-bold leading-normal tracking-wide gap-2 shadow-glow-red transition-transform hover:scale-105">
+<span class="material-symbols-outlined">call</span> Solicitar Asistencia
+    </button>
+</div>
+</main>
+<div class="sticky bottom-0 mt-auto bg-black/50 backdrop-blur-lg border-t border-glass-border">
+<div class="flex h-20 items-center justify-around px-4">
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-xs font-medium">Inicio</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined text-2xl">two_wheeler</span>
+<span class="text-xs font-medium">Motos</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl" style="text-shadow: 0 0 8px var(--tw-shadow-color); --tw-shadow-color: #FF4500;">medical_services</span>
+<span class="text-xs font-bold">Servicios</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-zinc-400">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-xs font-medium">Perfil</span>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

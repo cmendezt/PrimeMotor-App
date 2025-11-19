@@ -7,11 +7,37 @@ export const enum Variant {
 }
 
 const colorsLight = {
+  // Primary colors (orange-red from mockups)
+  primary: '#FF4500',
+  primaryDark: '#E63E00',
+  secondary: '#FF6347',
+  orange: '#F97316',
+
+  // Backgrounds
+  bgDark: '#0A0A0A',
+  bgCard: '#262626',
+  glassBg: 'rgba(255, 255, 255, 0.05)',
+  glassBorder: 'rgba(255, 255, 255, 0.1)',
+
+  // Text colors
+  textPrimary: '#F7FAFC',
+  textSecondary: '#A0AEC0',
+  textMuted: 'rgba(255, 255, 255, 0.7)',
+  textPlaceholder: 'rgba(255, 255, 255, 0.5)',
+
+  // Grays (keeping for compatibility)
   gray100: '#DFDFDF',
   gray200: '#A1A1A1',
   gray400: '#4D4D4D',
   gray50: '#EFEFEF',
   gray800: '#303030',
+
+  // States
+  success: '#10B981',
+  error: '#EF4444',
+  warning: '#F59E0B',
+
+  // Legacy colors (keeping for compatibility)
   purple100: '#E1E1EF',
   purple50: '#1B1A23',
   purple500: '#44427D',
@@ -20,11 +46,37 @@ const colorsLight = {
 } as const;
 
 const colorsDark = {
+  // Primary colors (orange-red from mockups)
+  primary: '#FF4500',
+  primaryDark: '#E63E00',
+  secondary: '#FF6347',
+  orange: '#F97316',
+
+  // Backgrounds
+  bgDark: '#0A0A0A',
+  bgCard: '#262626',
+  glassBg: 'rgba(255, 255, 255, 0.05)',
+  glassBorder: 'rgba(255, 255, 255, 0.1)',
+
+  // Text colors
+  textPrimary: '#F7FAFC',
+  textSecondary: '#A0AEC0',
+  textMuted: 'rgba(255, 255, 255, 0.7)',
+  textPlaceholder: 'rgba(255, 255, 255, 0.5)',
+
+  // Grays (adjusted for dark theme)
   gray100: '#000000',
   gray200: '#BABABA',
   gray400: '#969696',
-  gray50: '#EFEFEF',
+  gray50: '#0A0A0A',
   gray800: '#E0E0E0',
+
+  // States
+  success: '#10B981',
+  error: '#EF4444',
+  warning: '#F59E0B',
+
+  // Legacy colors (adjusted for dark theme)
   purple100: '#252732',
   purple50: '#1B1A23',
   purple500: '#A6A4F0',
@@ -49,8 +101,8 @@ export const config = {
   gutters: sizes,
   navigationColors: {
     ...DefaultTheme.colors,
-    background: colorsLight.gray50,
-    card: colorsLight.gray50,
+    background: colorsLight.bgDark,
+    card: colorsLight.bgDark,
   },
   variants: {
     dark: {
