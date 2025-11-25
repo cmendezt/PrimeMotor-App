@@ -1,30 +1,41 @@
 /**
  * Home Screen
- * Main screen showing motorcycle catalog
+ * Main screen with hero carousel, service shortcuts, and promotions
+ * Design: explorar_motocicletas_2
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
-  SafeAreaView,
+  Image,
+  TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { useQuery } from '@tanstack/react-query';
-import { SearchBar } from '@/components/SearchBar';
-import { CategoryFilter } from '@/components/CategoryFilter';
-import { FeaturedCarousel } from '@/components/FeaturedCarousel';
-import { MotorcycleCard } from '@/components/MotorcycleCard';
+import { useTheme } from '@/theme';
+import type { Colors } from '@/theme/types/colors';
+import { GradientBackground } from '@/components/molecules/GradientBackground';
+import { Header } from '@/components/molecules/Header';
+import { ServiceIconGrid, type ServiceItem } from '@/components/molecules/ServiceIconGrid';
+import { GlassCard } from '@/components/atoms/GlassCard';
+import { Button } from '@/components/atoms/Button';
 import { getMotorcycles, getFeaturedMotorcycles } from '@/services/supabase/motorcycles';
-import type { Motorcycle, MotorcycleType } from '@/types/motorcycle.types';
+import type { Motorcycle } from '@/types/motorcycle.types';
+
+const SERVICE_ITEMS: ServiceItem[] = [
+  { id: 'maintenance', icon: 'build-circle', label: 'Agendar Mantenimiento' },
+  { id: 'insurance', icon: 'admin-panel-settings', label: 'Cotizar Seguros' },
+  { id: 'roadside', icon: 'sos', label: 'Solicitar Asistencia' },
+];
 
 export const Home = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<MotorcycleType | 'all'>('all');
-  const [filteredMotorcycles, setFilteredMotorcycles] = useState<Motorcycle[]>([]);
+  const { colors, shadows } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   // Fetch featured motorcycles
   const { data: featuredData } = useQuery({
@@ -32,187 +43,268 @@ export const Home = () => {
     queryFn: getFeaturedMotorcycles,
   });
 
-  // Fetch all motorcycles
+  // Fetch all motorcycles (for count)
   const {
-    data: motorcyclesData,
     isLoading,
-    error,
     refetch,
-    isRefreshing,
+    isFetching,
   } = useQuery({
-    queryKey: ['motorcycles', selectedCategory, searchQuery],
-    queryFn: () =>
-      getMotorcycles({
-        type: selectedCategory === 'all' ? undefined : selectedCategory,
-        search: searchQuery || undefined,
-      }),
+    queryKey: ['motorcycles', 'all'],
+    queryFn: () => getMotorcycles({}),
   });
 
-  // Filter motorcycles based on search and category
-  useEffect(() => {
-    if (motorcyclesData?.data) {
-      setFilteredMotorcycles(motorcyclesData.data);
-    }
-  }, [motorcyclesData]);
+  const featuredMoto = featuredData?.data?.[0];
 
-  const handleMotorcyclePress = (motorcycle: Motorcycle) => {
-    // TODO: Navigate to motorcycle details
-    console.log('Pressed motorcycle:', motorcycle.name);
+  const handleServicePress = (serviceId: string) => {
+    console.log('Service pressed:', serviceId);
+    // TODO: Navigate to service screen
+  };
+
+  const handleCatalogPress = () => {
+    console.log('Navigate to catalog');
+    // TODO: Navigate to catalog
+  };
+
+  const handleNotificationPress = () => {
+    console.log('Notifications pressed');
+    // TODO: Show notifications
+  };
+
+  const handleMenuPress = () => {
+    console.log('Menu pressed');
+    // TODO: Open drawer
+  };
+
+  const getImageUrl = (motorcycle: Motorcycle) => {
+    const motorcycleWithImages = motorcycle as any;
+    if (motorcycleWithImages.images && motorcycleWithImages.images.length > 0) {
+      const primaryImage = motorcycleWithImages.images.find((img: any) => img.is_primary);
+      return primaryImage?.image_url || motorcycleWithImages.images[0].image_url;
+    }
+    return 'https://via.placeholder.com/600x400?text=Featured+Motorcycle';
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <GradientBackground variant="home">
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={isRefreshing}
+            refreshing={isFetching && !isLoading}
             onRefresh={refetch}
-            tintColor="#FF4500"
-            colors={['#FF4500']}
+            tintColor={colors.primary}
+            colors={[colors.primary]}
           />
         }
       >
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.logo}>PrimeMotor</Text>
-          <Text style={styles.subtitle}>Encuentra tu motocicleta perfecta</Text>
-        </View>
-
-        {/* Search */}
-        <View style={styles.searchContainer}>
-          <SearchBar value={searchQuery} onChangeText={setSearchQuery} />
-        </View>
-
-        {/* Category Filter */}
-        <CategoryFilter
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
+        <Header
+          showLogo
+          showMenu
+          showNotifications
+          onMenuPress={handleMenuPress}
+          onNotificationPress={handleNotificationPress}
         />
 
-        {/* Featured Carousel */}
-        {featuredData?.data && featuredData.data.length > 0 && (
-          <FeaturedCarousel
-            motorcycles={featuredData.data}
-            onPressMotorcycle={handleMotorcyclePress}
+        {/* Hero Title */}
+        <Text style={styles.heroTitle}>Tu Próxima Aventura</Text>
+
+        {/* Hero Card */}
+        {featuredMoto ? (
+          <View style={styles.heroContainer}>
+            <TouchableOpacity
+              style={[styles.heroCard, shadows.softLg]}
+              activeOpacity={0.9}
+            >
+              <Image
+                source={{ uri: getImageUrl(featuredMoto) }}
+                style={styles.heroImage}
+                resizeMode="cover"
+              />
+              <LinearGradient
+                colors={['transparent', 'rgba(0,0,0,0.8)']}
+                style={styles.heroGradient}
+              />
+              <View style={styles.heroContent}>
+                <Text style={styles.heroName}>{featuredMoto.name}</Text>
+                <Text style={styles.heroSubtitle}>La revolución eléctrica ha llegado.</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : isLoading ? (
+          <View style={styles.heroLoading}>
+            <ActivityIndicator size="large" color={colors.primary} />
+          </View>
+        ) : null}
+
+        {/* Services Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Servicios Esenciales</Text>
+          <ServiceIconGrid
+            services={SERVICE_ITEMS}
+            onServicePress={handleServicePress}
+            columns={3}
           />
-        )}
+        </View>
 
-        {/* Motorcycles List */}
-        <View style={styles.listContainer}>
-          <Text style={styles.sectionTitle}>
-            {selectedCategory === 'all' ? 'Todas las motocicletas' : 'Resultados'}
-          </Text>
+        {/* Promotions Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Promociones</Text>
 
-          {isLoading ? (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#FF4500" />
+          <GlassCard style={styles.promoCard}>
+            <View style={styles.promoRow}>
+              <LinearGradient
+                colors={[colors.primary, colors.secondary]}
+                style={styles.promoIconContainer}
+              >
+                <Text style={styles.promoIcon}>🏷️</Text>
+              </LinearGradient>
+              <View style={styles.promoText}>
+                <Text style={styles.promoTitle}>20% de descuento en seguros</Text>
+                <Text style={styles.promoSubtitle}>Conduce con protección total.</Text>
+              </View>
             </View>
-          ) : error ? (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>Error al cargar las motocicletas</Text>
-              <Text style={styles.errorSubtext}>
-                Por favor, intenta de nuevo más tarde
-              </Text>
+          </GlassCard>
+
+          <GlassCard style={styles.promoCard}>
+            <View style={styles.promoRow}>
+              <LinearGradient
+                colors={[colors.primary, colors.secondary]}
+                style={styles.promoIconContainer}
+              >
+                <Text style={styles.promoIcon}>📦</Text>
+              </LinearGradient>
+              <View style={styles.promoText}>
+                <Text style={styles.promoTitle}>Kit de bienvenida</Text>
+                <Text style={styles.promoSubtitle}>En la compra de tu nueva moto.</Text>
+              </View>
             </View>
-          ) : filteredMotorcycles.length === 0 ? (
-            <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>No se encontraron motocicletas</Text>
-              <Text style={styles.emptySubtext}>
-                Intenta ajustar los filtros de búsqueda
-              </Text>
-            </View>
-          ) : (
-            <View style={styles.grid}>
-              {filteredMotorcycles.map((motorcycle) => (
-                <MotorcycleCard
-                  key={motorcycle.id}
-                  motorcycle={motorcycle}
-                  onPress={handleMotorcyclePress}
-                />
-              ))}
-            </View>
-          )}
+          </GlassCard>
+        </View>
+
+        {/* CTA Button */}
+        <View style={styles.ctaContainer}>
+          <Button
+            title="Ver catálogo completo"
+            onPress={handleCatalogPress}
+            variant="primary"
+            size="large"
+          />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </GradientBackground>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0A0A0A',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 40,
-  },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 24,
-  },
-  logo: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#FF4500',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#AAAAAA',
-  },
-  searchContainer: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  listContainer: {
-    paddingHorizontal: 20,
-    marginTop: 8,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#FFFFFF',
-    marginBottom: 16,
-  },
-  grid: {
-    gap: 16,
-  },
-  loadingContainer: {
-    paddingVertical: 60,
-    alignItems: 'center',
-  },
-  errorContainer: {
-    paddingVertical: 60,
-    alignItems: 'center',
-  },
-  errorText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FF4444',
-    marginBottom: 8,
-  },
-  errorSubtext: {
-    fontSize: 14,
-    color: '#AAAAAA',
-  },
-  emptyContainer: {
-    paddingVertical: 60,
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FFFFFF',
-    marginBottom: 8,
-  },
-  emptySubtext: {
-    fontSize: 14,
-    color: '#AAAAAA',
-  },
-});
+const createStyles = (colors: Colors) =>
+  StyleSheet.create({
+    scrollView: {
+      flex: 1,
+    },
+    scrollContent: {
+      paddingBottom: 100,
+    },
+    heroTitle: {
+      fontSize: 32,
+      fontWeight: '700',
+      color: colors.textPrimary,
+      paddingHorizontal: 16,
+      paddingTop: 16,
+      paddingBottom: 16,
+      letterSpacing: -0.5,
+    },
+    heroContainer: {
+      paddingHorizontal: 16,
+      marginBottom: 24,
+    },
+    heroCard: {
+      borderRadius: 16,
+      overflow: 'hidden',
+      height: 200,
+      position: 'relative',
+    },
+    heroImage: {
+      width: '100%',
+      height: '100%',
+    },
+    heroGradient: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '60%',
+    },
+    heroContent: {
+      position: 'absolute',
+      bottom: 16,
+      left: 16,
+      right: 16,
+    },
+    heroName: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.textPrimary,
+      marginBottom: 4,
+    },
+    heroSubtitle: {
+      fontSize: 14,
+      color: colors.textMuted,
+    },
+    heroLoading: {
+      height: 200,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 16,
+      marginBottom: 24,
+      backgroundColor: colors.glassBg,
+      borderRadius: 16,
+    },
+    section: {
+      marginBottom: 24,
+    },
+    sectionTitle: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: colors.textPrimary,
+      paddingHorizontal: 16,
+      marginBottom: 16,
+    },
+    promoCard: {
+      marginHorizontal: 16,
+      marginBottom: 12,
+    },
+    promoRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 16,
+    },
+    promoIconContainer: {
+      width: 64,
+      height: 64,
+      borderRadius: 12,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    promoIcon: {
+      fontSize: 32,
+    },
+    promoText: {
+      flex: 1,
+    },
+    promoTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: colors.textPrimary,
+      marginBottom: 4,
+    },
+    promoSubtitle: {
+      fontSize: 14,
+      color: colors.textMuted,
+    },
+    ctaContainer: {
+      paddingHorizontal: 16,
+      marginTop: 8,
+    },
+  });

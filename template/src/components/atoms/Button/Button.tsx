@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '@/theme';
+import type { Colors } from '@/theme/types/colors';
 
 export interface ButtonProps extends TouchableOpacityProps {
   title: string;
@@ -26,14 +27,15 @@ export const Button: React.FC<ButtonProps> = ({
   style,
   ...props
 }) => {
-  const { colors } = useTheme();
+  const { colors, shadows } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const buttonHeight = size === 'small' ? 40 : size === 'medium' ? 48 : 56;
 
   const renderContent = () => (
     <View style={[styles.content, { height: buttonHeight }]}>
       {loading ? (
-        <ActivityIndicator color="#FFFFFF" />
+        <ActivityIndicator color={colors.textPrimary} />
       ) : (
         <Text style={[styles.text, variant === 'outline' && { color: colors.primary }]}>
           {title}
@@ -47,7 +49,7 @@ export const Button: React.FC<ButtonProps> = ({
       <TouchableOpacity
         activeOpacity={0.8}
         disabled={disabled || loading}
-        style={[styles.container, disabled && styles.disabled, style]}
+        style={[styles.container, shadows.buttonPrimary, disabled && styles.disabled, style]}
         {...props}
       >
         <LinearGradient
@@ -85,30 +87,26 @@ export const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 12,
-    overflow: 'hidden',
-    shadowColor: '#FF4500',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  gradient: {
-    borderRadius: 12,
-  },
-  content: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-  },
-  text: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-});
+const createStyles = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      borderRadius: 12,
+      overflow: 'hidden',
+    },
+    gradient: {
+      borderRadius: 12,
+    },
+    content: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 24,
+    },
+    text: {
+      color: colors.textPrimary,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    disabled: {
+      opacity: 0.5,
+    },
+  });

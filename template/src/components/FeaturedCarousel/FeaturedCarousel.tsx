@@ -1,11 +1,15 @@
 /**
  * FeaturedCarousel Component
- * Horizontal carousel of featured motorcycles
+ * Horizontal carousel of featured motorcycles (Hero Carousel)
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import type { Motorcycle } from '@/types/motorcycle.types';
+import { useTheme } from '@/theme';
+import type { Colors } from '@/theme/types/colors';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.85;
@@ -20,6 +24,8 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
   motorcycles,
   onPressMotorcycle,
 }) => {
+  const { colors, shadows } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-MX', {
       style: 'currency',
@@ -44,7 +50,8 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>⭐ Destacados</Text>
+        <MaterialIcons name="star" size={22} color={colors.primary} />
+        <Text style={styles.title}>Destacados</Text>
       </View>
 
       <ScrollView
@@ -57,7 +64,7 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
         {motorcycles.map((motorcycle) => (
           <TouchableOpacity
             key={motorcycle.id}
-            style={styles.card}
+            style={[styles.card, shadows.card]}
             onPress={() => onPressMotorcycle?.(motorcycle)}
             activeOpacity={0.9}
           >
@@ -68,12 +75,15 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
                 style={styles.image}
                 resizeMode="cover"
               />
-              <View style={styles.gradient} />
+              <LinearGradient
+                colors={['transparent', 'rgba(0,0,0,0.7)', 'rgba(0,0,0,0.95)']}
+                style={styles.gradient}
+              />
             </View>
 
             {/* Content Overlay */}
             <View style={styles.content}>
-              <View style={styles.badge}>
+              <View style={[styles.badge, shadows.glowOrangeSmall]}>
                 <Text style={styles.badgeText}>DESTACADO</Text>
               </View>
 
@@ -105,96 +115,101 @@ export const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 24,
-  },
-  header: {
-    paddingHorizontal: 20,
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-  scrollContent: {
-    paddingHorizontal: 20,
-    gap: CARD_MARGIN,
-  },
-  card: {
-    width: CARD_WIDTH,
-    height: 280,
-    borderRadius: 16,
-    overflow: 'hidden',
-    backgroundColor: '#1A1A1A',
-  },
-  imageContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  gradient: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: '70%',
-    backgroundColor: 'linear-gradient(transparent, rgba(0,0,0,0.9))',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  badge: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#FF4500',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-  },
-  badgeText: {
-    color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  info: {
-    gap: 4,
-  },
-  brand: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#FF4500',
-    textTransform: 'uppercase',
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#FFFFFF',
-    marginBottom: 4,
-  },
-  specs: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  specText: {
-    fontSize: 14,
-    color: '#CCCCCC',
-  },
-  specDivider: {
-    fontSize: 14,
-    color: '#888888',
-    marginHorizontal: 8,
-  },
-  price: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-});
+const createStyles = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      marginBottom: 24,
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      marginBottom: 16,
+      gap: 8,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: '700',
+      color: colors.textPrimary,
+    },
+    scrollContent: {
+      paddingHorizontal: 20,
+      gap: CARD_MARGIN,
+    },
+    card: {
+      width: CARD_WIDTH,
+      height: 280,
+      borderRadius: 16,
+      overflow: 'hidden',
+      backgroundColor: colors.bgCard,
+      borderWidth: 1,
+      borderColor: colors.glassBorder,
+    },
+    imageContainer: {
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+    },
+    gradient: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: '70%',
+    },
+    content: {
+      flex: 1,
+      justifyContent: 'space-between',
+      padding: 20,
+    },
+    badge: {
+      alignSelf: 'flex-start',
+      backgroundColor: colors.primary,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 8,
+    },
+    badgeText: {
+      color: colors.textPrimary,
+      fontSize: 12,
+      fontWeight: '700',
+    },
+    info: {
+      gap: 4,
+    },
+    brand: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: colors.primary,
+      textTransform: 'uppercase',
+    },
+    name: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.textPrimary,
+      marginBottom: 4,
+    },
+    specs: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 8,
+    },
+    specText: {
+      fontSize: 14,
+      color: colors.textSecondary,
+    },
+    specDivider: {
+      fontSize: 14,
+      color: colors.textMuted,
+      marginHorizontal: 8,
+    },
+    price: {
+      fontSize: 28,
+      fontWeight: '700',
+      color: colors.textPrimary,
+    },
+  });

@@ -5,6 +5,7 @@ import type { Fonts } from './fonts';
 import type { Gutters } from './gutters';
 import type componentGenerators from '@/theme/components';
 import type layout from '@/theme/layout';
+import type { shadows } from '@/theme/shadows';
 import type { Colors } from '@/theme/types/colors';
 import type { Theme as NavigationTheme } from '@react-navigation/native';
 
@@ -19,5 +20,6 @@ export type Theme = {
   gutters: Gutters;
   layout: typeof layout;
   navigationTheme: NavigationTheme;
+  shadows: typeof shadows;
   variant: Variant;
 };

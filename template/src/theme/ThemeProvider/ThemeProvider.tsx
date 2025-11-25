@@ -33,6 +33,7 @@ import {
 } from '@/theme/fonts';
 import { generateGutters, staticGutterStyles } from '@/theme/gutters';
 import layout from '@/theme/layout';
+import { shadows } from '@/theme/shadows';
 import generateConfig from '@/theme/ThemeProvider/generateConfig';
 
 type Context = {
@@ -127,6 +128,7 @@ function ThemeProvider({ children = false, storage }: Properties) {
       fonts,
       gutters,
       layout,
+      shadows,
       variant,
     } satisfies ComponentTheme;
   }, [variant, fonts, backgrounds, borders, fullConfig.colors, gutters]);

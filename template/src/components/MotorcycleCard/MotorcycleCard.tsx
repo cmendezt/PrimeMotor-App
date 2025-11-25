@@ -3,9 +3,11 @@
  * Displays a motorcycle with image, name, price, and key specs
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import type { Motorcycle } from '@/types/motorcycle.types';
+import { useTheme } from '@/theme';
+import type { Colors } from '@/theme/types/colors';
 
 interface MotorcycleCardProps {
   motorcycle: Motorcycle;
@@ -13,6 +15,8 @@ interface MotorcycleCardProps {
 }
 
 export const MotorcycleCard: React.FC<MotorcycleCardProps> = ({ motorcycle, onPress }) => {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-MX', {
       style: 'currency',
@@ -110,87 +114,88 @@ export const MotorcycleCard: React.FC<MotorcycleCardProps> = ({ motorcycle, onPr
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#1A1A1A',
-    borderRadius: 12,
-    overflow: 'hidden',
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#2A2A2A',
-  },
-  imageContainer: {
-    width: '100%',
-    height: 200,
-    position: 'relative',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  discountBadge: {
-    position: 'absolute',
-    top: 12,
-    right: 12,
-    backgroundColor: '#FF4500',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-    zIndex: 1,
-  },
-  discountText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  content: {
-    padding: 16,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  brand: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#FF4500',
-    textTransform: 'uppercase',
-  },
-  typeBadge: {
-    backgroundColor: '#2A2A2A',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 6,
-  },
-  typeText: {
-    fontSize: 12,
-    color: '#CCCCCC',
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#FFFFFF',
-    marginBottom: 8,
-  },
-  specs: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  specText: {
-    fontSize: 13,
-    color: '#AAAAAA',
-  },
-  specDivider: {
-    fontSize: 13,
-    color: '#666666',
-    marginHorizontal: 8,
-  },
-  price: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
-});
+const createStyles = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: colors.bgCard,
+      borderRadius: 12,
+      overflow: 'hidden',
+      marginBottom: 16,
+      borderWidth: 1,
+      borderColor: colors.bgSurface,
+    },
+    imageContainer: {
+      width: '100%',
+      height: 200,
+      position: 'relative',
+    },
+    image: {
+      width: '100%',
+      height: '100%',
+    },
+    discountBadge: {
+      position: 'absolute',
+      top: 12,
+      right: 12,
+      backgroundColor: colors.primary,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 8,
+      zIndex: 1,
+    },
+    discountText: {
+      color: colors.textPrimary,
+      fontSize: 14,
+      fontWeight: '700',
+    },
+    content: {
+      padding: 16,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 8,
+    },
+    brand: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: colors.primary,
+      textTransform: 'uppercase',
+    },
+    typeBadge: {
+      backgroundColor: colors.bgSurface,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderRadius: 6,
+    },
+    typeText: {
+      fontSize: 12,
+      color: colors.textSecondary,
+    },
+    name: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: colors.textPrimary,
+      marginBottom: 8,
+    },
+    specs: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 12,
+    },
+    specText: {
+      fontSize: 13,
+      color: colors.textSecondary,
+    },
+    specDivider: {
+      fontSize: 13,
+      color: colors.textMuted,
+      marginHorizontal: 8,
+    },
+    price: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.textPrimary,
+    },
+  });
