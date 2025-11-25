@@ -7,9 +7,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigation } from '@react-navigation/native';
+import type { RootScreenProps } from '@/navigation/types';
+import { Paths } from '@/navigation/paths';
 import { GradientBackground } from '@/components/molecules/GradientBackground';
 import { TextInput, PasswordInput } from '@/components/atoms/TextInput';
 import { Button } from '@/components/atoms/Button';
@@ -20,6 +24,7 @@ import { useTheme } from '@/theme';
 export const Signup = () => {
   const { colors } = useTheme();
   const { signUp } = useAuth();
+  const navigation = useNavigation<RootScreenProps<typeof Paths.Signup>['navigation']>();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -141,10 +146,12 @@ export const Signup = () => {
           </View>
 
           <View style={styles.footer}>
-            <Text style={[styles.footerText, { color: colors.textSecondary }]}>
-              ¿Ya tienes cuenta?{' '}
-              <Text style={{ color: colors.primary, fontWeight: '700' }}>Inicia Sesión</Text>
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate(Paths.Login)}>
+              <Text style={[styles.footerText, { color: colors.textSecondary }]}>
+                ¿Ya tienes cuenta?{' '}
+                <Text style={{ color: colors.primary, fontWeight: '700' }}>Inicia Sesión</Text>
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
