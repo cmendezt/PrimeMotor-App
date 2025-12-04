@@ -13,6 +13,8 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { useQuery } from '@tanstack/react-query';
 import { useTheme } from '@/theme';
 import type { Colors } from '@/theme/types/colors';
@@ -23,11 +25,16 @@ import { CategoryFilter, type FilterValue } from '@/components/CategoryFilter';
 import { PromotionalCarousel } from '@/components/molecules/PromotionalCarousel';
 import { CatalogMotorcycleCard } from '@/components/molecules/CatalogMotorcycleCard';
 import { getMotorcycles } from '@/services/supabase/motorcycles';
+import { Paths } from '@/navigation/paths';
+import type { RootStackParamList } from '@/navigation/types';
 import type { Motorcycle, MotorcycleFilters } from '@/types/motorcycle.types';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 export const Catalog = () => {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
+  const navigation = useNavigation<NavigationProp>();
 
   // State
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,10 +53,13 @@ export const Catalog = () => {
     }
 
     if (activeFilter.kind === 'type') {
-      filters.type = activeFilter.value;
+      filters.type = activeFilter.value as MotorcycleFilters['type'];
     } else if (activeFilter.kind === 'condition') {
-      filters.condition = activeFilter.value;
+      filters.condition = activeFilter.value as MotorcycleFilters['condition'];
     }
+
+    // Debug log to verify filters are being applied
+    console.log('[Catalog] Active filter:', activeFilter, '-> Query filters:', filters);
 
     return filters;
   }, [searchQuery, activeFilter]);
@@ -77,9 +87,8 @@ export const Catalog = () => {
   );
 
   const handleMotorcyclePress = useCallback((motorcycle: Motorcycle) => {
-    // TODO: Navigate to motorcycle detail
-    console.log('Motorcycle pressed:', motorcycle.id);
-  }, []);
+    navigation.navigate(Paths.MotorcycleDetail, { motorcycleId: motorcycle.id });
+  }, [navigation]);
 
   const handleFavoriteToggle = useCallback((motorcycleId: string) => {
     // TODO: Implement favorites (requires auth)

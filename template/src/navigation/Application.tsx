@@ -10,7 +10,7 @@ import { Paths } from '@/navigation/paths';
 import { useTheme } from '@/theme';
 import { BottomNavigation } from '@/components/organisms/BottomNavigation';
 
-import { Home, Catalog, Example, Startup, Login, Signup } from '@/screens';
+import { Home, Catalog, Example, Startup, Login, Signup, MotorcycleDetail } from '@/screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -82,6 +82,13 @@ function ApplicationNavigator() {
           {/* Other screens */}
           <Stack.Screen component={Startup} name={Paths.Startup} />
           <Stack.Screen component={Example} name={Paths.Example} />
+
+          {/* Motorcycle Detail Screen */}
+          <Stack.Screen
+            component={MotorcycleDetail}
+            name={Paths.MotorcycleDetail}
+            options={{ presentation: 'card' }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

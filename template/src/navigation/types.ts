@@ -19,6 +19,7 @@ export type RootStackParamList = {
   [Paths.Startup]: undefined;
   [Paths.Login]: undefined;
   [Paths.Signup]: undefined;
+  [Paths.MotorcycleDetail]: { motorcycleId: string };
 };
 
 export type RootScreenProps<

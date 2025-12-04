@@ -4,7 +4,7 @@
  * Design: explorar_motocicletas_2
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,8 @@ import {
   RefreshControl,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { useQuery } from '@tanstack/react-query';
 import { useTheme } from '@/theme';
 import type { Colors } from '@/theme/types/colors';
@@ -25,7 +27,11 @@ import { ServiceIconGrid, type ServiceItem } from '@/components/molecules/Servic
 import { GlassCard } from '@/components/atoms/GlassCard';
 import { Button } from '@/components/atoms/Button';
 import { getMotorcycles, getFeaturedMotorcycles } from '@/services/supabase/motorcycles';
+import { Paths } from '@/navigation/paths';
+import type { RootStackParamList } from '@/navigation/types';
 import type { Motorcycle } from '@/types/motorcycle.types';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const SERVICE_ITEMS: ServiceItem[] = [
   { id: 'maintenance', icon: 'build-circle', label: 'Agendar Mantenimiento' },
@@ -36,6 +42,7 @@ const SERVICE_ITEMS: ServiceItem[] = [
 export const Home = () => {
   const { colors, shadows } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
+  const navigation = useNavigation<NavigationProp>();
 
   // Fetch featured motorcycles
   const { data: featuredData } = useQuery({
@@ -55,15 +62,18 @@ export const Home = () => {
 
   const featuredMoto = featuredData?.data?.[0];
 
-  const handleServicePress = (serviceId: string) => {
+  const handleServicePress = useCallback((serviceId: string) => {
     console.log('Service pressed:', serviceId);
     // TODO: Navigate to service screen
-  };
+  }, []);
 
-  const handleCatalogPress = () => {
-    console.log('Navigate to catalog');
-    // TODO: Navigate to catalog
-  };
+  const handleCatalogPress = useCallback(() => {
+    navigation.navigate(Paths.MainTabs, { screen: Paths.Catalog });
+  }, [navigation]);
+
+  const handleFeaturedPress = useCallback((motorcycle: Motorcycle) => {
+    navigation.navigate(Paths.MotorcycleDetail, { motorcycleId: motorcycle.id });
+  }, [navigation]);
 
   const handleNotificationPress = () => {
     console.log('Notifications pressed');
@@ -117,6 +127,7 @@ export const Home = () => {
             <TouchableOpacity
               style={[styles.heroCard, shadows.softLg]}
               activeOpacity={0.9}
+              onPress={() => handleFeaturedPress(featuredMoto)}
             >
               <Image
                 source={{ uri: getImageUrl(featuredMoto) }}
@@ -129,7 +140,7 @@ export const Home = () => {
               />
               <View style={styles.heroContent}>
                 <Text style={styles.heroName}>{featuredMoto.name}</Text>
-                <Text style={styles.heroSubtitle}>La revolución eléctrica ha llegado.</Text>
+                <Text style={styles.heroSubtitle}>La revolucion electrica ha llegado.</Text>
               </View>
             </TouchableOpacity>
           </View>

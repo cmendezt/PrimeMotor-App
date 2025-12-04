@@ -10,6 +10,8 @@ import type { Motorcycle, MotorcycleFilters, MotorcycleType, MotorcycleCondition
  * Get all motorcycles with optional filtering
  */
 export const getMotorcycles = async (filters?: MotorcycleFilters) => {
+  console.log('[motorcycles.ts] getMotorcycles called with filters:', filters);
+
   let query = supabase
     .from('motorcycles')
     .select(`
@@ -21,10 +23,12 @@ export const getMotorcycles = async (filters?: MotorcycleFilters) => {
 
   // Apply filters
   if (filters?.type) {
+    console.log('[motorcycles.ts] Applying type filter:', filters.type);
     query = query.eq('type', filters.type);
   }
 
   if (filters?.condition) {
+    console.log('[motorcycles.ts] Applying condition filter:', filters.condition);
     query = query.eq('condition', filters.condition);
   }
 
@@ -53,6 +57,11 @@ export const getMotorcycles = async (filters?: MotorcycleFilters) => {
   }
 
   const { data, error } = await query;
+
+  console.log('[motorcycles.ts] Query returned', data?.length || 0, 'results');
+  if (error) {
+    console.error('[motorcycles.ts] Query error:', error);
+  }
 
   return { data: data as Motorcycle[] | null, error };
 };

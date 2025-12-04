@@ -12,4 +12,5 @@ export const enum Paths {
   Startup = 'startup',
   Login = 'login',
   Signup = 'signup',
+  MotorcycleDetail = 'motorcycleDetail',
 }

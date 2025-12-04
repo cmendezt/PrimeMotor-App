@@ -5,6 +5,7 @@
 
 import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@/theme';
 import type { Colors } from '@/theme/types/colors';
@@ -33,10 +34,11 @@ export const Header: React.FC<HeaderProps> = ({
   onProfilePress,
 }) => {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
       {/* Left Side */}
       <View style={styles.leftSection}>
         {showMenu && (
@@ -88,8 +90,7 @@ const createStyles = (colors: Colors) =>
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: 16,
-      paddingVertical: 12,
-      height: 60,
+      paddingBottom: 12,
     },
     leftSection: {
       flexDirection: 'row',

@@ -44,3 +44,33 @@ export interface MotorcycleResponse {
 export interface MotorcycleWithImages extends Motorcycle {
   images?: MotorcycleImage[];
 }
+
+// Battery option interface (EVOBIKE catalog structure)
+export interface BatteryOption {
+  voltaje: string;
+  amperaje: string;
+  autonomia?: string;
+  extraible?: boolean;
+}
+
+// EVOBIKE-style specifications interface
+export interface MotorcycleSpecifications {
+  potencia?: string;
+  bateria?: BatteryOption | BatteryOption[];
+  cargador?: string | string[];
+  autonomia?: string;
+  velocidadMaxima?: string;
+  capacidadCarga?: string;
+  peso?: string;
+  tipoLlanta?: string;
+  tiempoCarga?: string;
+  categoria?: string;
+  // Allow additional properties for flexibility
+  [key: string]: unknown;
+}
+
+// Enhanced motorcycle type with typed specifications
+export interface MotorcycleWithTypedSpecs extends MotorcycleWithImages {
+  specifications: MotorcycleSpecifications | null;
+  features: string[] | null;
+}
